@@ -40,17 +40,54 @@ list<string>::iterator it = palabras.begin();
 vector<int> eliminarRepetidos(vector<int> vector_a)
 {
     vector<int> respuesta;
+    for(int i=0; i<vector_a.size();i++){
+        if(i==0)
+            respuesta.push_back(vector_a[i]);
+        else{
+            int cont=0;
+            for(int x=0;x<respuesta.size();x++){
+                if(vector_a[i]==respuesta[x])
+                    cont++;
+
+            }
+            if(cont>=1)
+                continue;
+            else
+                respuesta.push_back(vector_a[i]);
+        }
+    }
     return respuesta;
 }
 
 //Guarda el contenido del objeto Pais que viene como parametro
 void guardar(string nombre_archivo, Pais* pais) {
+
+    ofstream mi_archivo(nombre_archivo);
+    mi_archivo<<pais->nombre<<endl;
+    mi_archivo<<pais->capital<<endl;
+    mi_archivo<<pais->habitantes<<endl;
+    mi_archivo<<pais->superficie<<endl;
+    mi_archivo.close();
+
 }
 
 //Devuelve un objeto Pais que contenga la informacion que se guardo anteriormente por la funcion guardar()
 Pais* abrir(string nombre_archivo)
 {
-    return NULL;
+    ifstream mi_archivo(nombre_archivo);
+    string nom, cap;
+    int super, habis;
+
+    while(mi_archivo>>nom){
+        mi_archivo>>cap;
+        mi_archivo>>habis;
+        mi_archivo>>super;
+    }
+    mi_archivo.close();
+    Pais* pais= new Pais(nom,cap,habis,super);
+    return pais;
+
+
 }
 
 //Devuelve el mayor entre a, b y c
